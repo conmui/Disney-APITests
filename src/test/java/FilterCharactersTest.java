@@ -13,7 +13,8 @@ public class FilterCharactersTest extends BaseTest {
         BaseService baseService = new BaseService();
         String queryValue = "Sven";
 //        String queryValue = "Mulan";
-        Response response = baseService.sendGetRequestWithParam("/character", "name", queryValue);
+        Map<String, Object> param = Map.of("name", queryValue);
+        Response response = baseService.sendGetRequestWithParams("/character", param);
 
         verifyStatusCode(response, OK_STATUS_CODE);
 
