@@ -6,12 +6,13 @@ import static org.hamcrest.Matchers.*;
 
 public class GetOneCharacterTest extends BaseTest {
     @Test
-    public void getOneCharacterByIdEndpoint() {
+    public void getOneCharacterByEndpoint_Id() {
         BaseService baseService = new BaseService();
         int characterId = 2183;
         Response response = baseService.sendGetRequest("/character/" + characterId);
 
         verifyStatusCode(response, OK_STATUS_CODE);
+
         verifyData(response, characterId);
     }
 

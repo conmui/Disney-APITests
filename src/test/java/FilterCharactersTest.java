@@ -11,17 +11,17 @@ public class FilterCharactersTest extends BaseTest {
     @Test
     public void filterCharacterByParam_Name() {
         BaseService baseService = new BaseService();
-        String queryValue = "Sven";
-//        String queryValue = "Mulan";
-        Map<String, Object> param = Map.of("name", queryValue);
+//        String characterNameValue = "Sven";
+        String characterNameValue = "Mulan";
+        Map<String, Object> param = Map.of("name", characterNameValue);
         Response response = baseService.sendGetRequestWithParams("/character", param);
 
         verifyStatusCode(response, OK_STATUS_CODE);
 
-        verifyData(response, queryValue);
+        verifyData(response, characterNameValue);
     }
 
-    public void verifyData(Response response, String queryValue) {
+    public void verifyData(Response response, String expectedName) {
         Object data = response.path("data");
 
         //data returns as a list when there are multiple matching results
@@ -30,11 +30,11 @@ public class FilterCharactersTest extends BaseTest {
 
             for (Map<String, Object> character : dataList) {
                 String characterName = (String) character.get("name");
-                assertThat(characterName, containsString(queryValue));
+                assertThat(characterName, containsString(expectedName));
             }
         } else {
             String characterName = response.path("data.name");
-            assertThat(characterName, containsString(queryValue));
+            assertThat(characterName, containsString(expectedName));
         }
     }
 }
