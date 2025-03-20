@@ -19,7 +19,7 @@ public class PaginationTest extends BaseTest {
         int prevPageNum = extractPageNum(response.path("info.previousPage"));
         int nextPageNum = extractPageNum(response.path("info.nextPage"));
 
-        verifyStatusCode(response, OK_STATUS_CODE);
+        verifyOKStatusCode(response);
 
         assertThat(prevPageNum, equalTo(expectedPrevPageNum));
 

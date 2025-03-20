@@ -13,7 +13,7 @@ public class GetAllCharactersTest extends BaseTest {
         BaseService baseService = new BaseService();
         Response response = baseService.sendGetRequest("/character");
 
-        verifyStatusCode(response, OK_STATUS_CODE);
+        verifyOKStatusCode(response);
 
         verifyData(response);
     }

@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.*;
 public class BaseTest {
     final int OK_STATUS_CODE = 200;
 
-    public void verifyStatusCode(Response response, int expected) {
-        assertThat(response.getStatusCode(), equalTo(expected));
+    public void verifyOKStatusCode(Response response) {
+        assertThat(response.getStatusCode(), equalTo(OK_STATUS_CODE));
     }
 }

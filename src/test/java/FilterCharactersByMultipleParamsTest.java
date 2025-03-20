@@ -16,6 +16,8 @@ public class FilterCharactersByMultipleParamsTest extends BaseTest {
         Map<String, Object> params = Map.of("name", characterNameValue, "films", filmsValue);
         Response response = baseService.sendGetRequestWithParams("/character", params);
 
+        verifyOKStatusCode(response);
+
         verifyData(response, characterNameValue, filmsValue);
     }
 

@@ -11,12 +11,12 @@ public class FilterCharactersTest extends BaseTest {
     @Test
     public void filterCharacterByParam_Name() {
         BaseService baseService = new BaseService();
-//        String characterNameValue = "Sven";
-        String characterNameValue = "Mulan";
+        String characterNameValue = "Sven";
+//        String characterNameValue = "Mulan";
         Map<String, Object> param = Map.of("name", characterNameValue);
         Response response = baseService.sendGetRequestWithParams("/character", param);
 
-        verifyStatusCode(response, OK_STATUS_CODE);
+        verifyOKStatusCode(response);
 
         verifyData(response, characterNameValue);
     }
