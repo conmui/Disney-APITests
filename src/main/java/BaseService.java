@@ -10,4 +10,11 @@ public class BaseService {
                 when().
                     get(baseURL + endpoint);
     }
+
+    public Response sendGetRequestWithParam(String endpoint, String queryParam, String queryValue) {
+        return given().
+                    param(queryParam, queryValue).
+                when().
+                    get(baseURL + endpoint);
+    }
 }
