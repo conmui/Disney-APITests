@@ -9,19 +9,17 @@ import static org.hamcrest.Matchers.*;
 
 public class GetAllCharactersTest extends BaseTest {
     @Test
-    public void getAllCharacters() {
+    public void getAllCharacters_fields() {
         BaseService baseService = new BaseService();
         Response response = baseService.sendGetRequest("/character");
 
         verifyOKStatusCode(response);
-
-        verifyData(response);
+        verifyInfo(response, 50, 149, "null", "http://api.disneyapi.dev/character?page=2&pageSize=50");
+        verifyDataFields(response);
     }
 
-    public void verifyData(Response response) {
+    public void verifyDataFields(Response response) {
         List<Map<String, Object>> data = response.path("data");
-
-        assertThat(data, notNullValue());
 
         for (Map<String, Object> character : data) {
             assertThat(character, hasKey(equalTo("_id")));

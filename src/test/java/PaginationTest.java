@@ -8,28 +8,42 @@ import static org.hamcrest.Matchers.*;
 
 public class PaginationTest extends BaseTest {
     @Test
-    public void paginationTest() {
+    public void pagination_prevNumNextNum() {
         BaseService baseService = new BaseService();
-
-        int queryValue = 2;
-        int expectedPrevPageNum = queryValue - 1;
-        int expectedNextPageNum = queryValue + 1;
-
-        Response response = baseService.sendGetRequestWithParams("/character", Map.of("page", queryValue));
-        int prevPageNum = extractPageNum(response.path("info.previousPage"));
-        int nextPageNum = extractPageNum(response.path("info.nextPage"));
+        int pageNum = 2;
+        Response response = baseService.sendGetRequestWithParams("/character", Map.of("page", pageNum));
 
         verifyOKStatusCode(response);
+        assertThat(extractPageNum(response.path("info.previousPage")), equalTo(pageNum - 1));
+        assertThat(extractPageNum(response.path("info.nextPage")), equalTo(pageNum + 1));
+    }
 
-        assertThat(prevPageNum, equalTo(expectedPrevPageNum));
+    @Test
+    public void paginationFirstPage_prevNullNextNum() {
+        BaseService baseService = new BaseService();
+        int pageNum = 1;
+        Response response = baseService.sendGetRequestWithParams("/character", Map.of("page", pageNum));
 
-        assertThat(nextPageNum, equalTo(expectedNextPageNum));
+        verifyOKStatusCode(response);
+        assertThat(response.path("info.previousPage"), nullValue());
+        assertThat(extractPageNum(response.path("info.nextPage")), equalTo(pageNum + 1));
+    }
+
+    @Test
+    public void paginationLastPage_prevNumNextNull() {
+        BaseService baseService = new BaseService();
+        int pageNum = 149;
+        Response response = baseService.sendGetRequestWithParams("/character", Map.of("page", pageNum));
+
+        verifyOKStatusCode(response);
+        assertThat(extractPageNum(response.path("info.previousPage")), equalTo(pageNum - 1));
+        assertThat(response.path("info.nextPage"), nullValue());
     }
 
     public int extractPageNum(String url) {
         int start = url.indexOf("page=") + 5;
         int end = url.indexOf("&");
 
-        return Integer.valueOf(url.substring(start, end));
+        return Integer.parseInt(url.substring(start, end));
     }
 }
